@@ -14,4 +14,31 @@ search.get('/:query', function(req, res){
 
 });
 
+search.get('/:query/positive', function(req, res){
+
+  var query = req.params.query + ' :)';
+  query = encodeURIComponent(query);
+  
+  client.get('search/tweets', { q: query } , function(error, tweets, response){
+    if (!error) {
+      res.json(tweets);
+    }
+  });
+
+});
+
+search.get('/:query/negative', function(req, res){
+
+  var query = req.params.query + ' :(';
+  query = encodeURIComponent(query);
+
+  client.get('search/tweets', { q: query } , function(error, tweets, response){
+    if (!error) {
+      res.json(tweets);
+    }
+  });
+
+});
+
+
 module.exports = search;

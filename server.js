@@ -5,10 +5,10 @@ var express = require('express'),
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var router = express.Router();
-
-router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
 });
 
 app.use('/search', require('./routes/search'));
