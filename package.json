@@ -1,0 +1,9 @@
+{
+  "name": "brandtalk-api",
+  "version": "1.0.0",
+  "dependencies": {
+    "body-parser": "^1.12.3",
+    "oauth": "^0.9.12",
+    "twitter": "^1.2.5"
+  }
+}
