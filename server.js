@@ -7,18 +7,29 @@ var Twitter = require('twitter'),
 
 io.on('connection', function(socket){
 
+  var currentStream;
+
   socket.on('search', function(query){
 
+    if(currentStream){
+      currentStream.destroy();
+    }
+
     client.stream('statuses/filter', { track: query }, function(stream) {
+
+      currentStream = stream;
+
       stream.on('data', function(tweet) {
         tweet.isSad = tweetParser.isSad(tweet);
         socket.emit('tweet', tweet);
       });
 
       stream.on('error', function(error) {
-        throw error;
+        console.log(error);
       });
+
     });
+
   });
 
 });
