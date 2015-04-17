@@ -5,15 +5,19 @@ var express = require('express'),
     client = new Twitter(require('../env/credentials.js').twitter),
     tweetParser = require('../util/tweetParser.js');
 
-search.get('/:query', function(req, res){
+/*search.get('/:query', function(req, res){
 
-  client.get('search/tweets', { q: req.params.query } , function(error, tweets, response){
-    if (!error) {
-      res.json(tweets);
-    }
+  client.stream('statuses/filter', { track: req.params.query }, function(stream) {
+    stream.on('data', function(tweet) {
+      res.json(tweet);
+    });
+
+    stream.on('error', function(error) {
+      // TODO: Handle the error!;
+    });
   });
 
-});
+});*/
 
 search.get('/:query/positive', function(req, res){
 
