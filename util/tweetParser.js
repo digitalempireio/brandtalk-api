@@ -26,4 +26,17 @@ var parse = function(tweets, isSad){
 
 };
 
-module.exports = parse;
+var isSad = function(tweet){
+
+  for(var i = 0; i < sadWords.length; i++){
+    if(tweet.text.toLowerCase().split(' ').indexOf(sadWords[i]) >= 0) {
+      return true;
+    }
+  }
+
+  return false;
+
+};
+
+module.exports.parse = parse;
+module.exports.isSad = isSad;

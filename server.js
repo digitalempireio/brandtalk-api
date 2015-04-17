@@ -1,19 +1,29 @@
-var express = require('express'),
-    app = express(),
-    bodyParser = require('body-parser');
+var server = require('http').createServer(),
+    io = require('socket.io')(server);
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+var Twitter = require('twitter'),
+    client = new Twitter(require('./env/credentials.js').twitter),
+    tweetParser = require('./util/tweetParser.js');
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
+io.on('connection', function(socket){
+
+  socket.on('search', function(query){
+
+    client.stream('statuses/filter', { track: query }, function(stream) {
+      stream.on('data', function(tweet) {
+        tweet.isSad = tweetParser.isSad(tweet);
+        socket.emit('tweet', tweet);
+      });
+
+      stream.on('error', function(error) {
+        throw error;
+      });
+    });
+  });
+
 });
-
-app.use('/search', require('./routes/search'));
 
 var port = process.env.PORT || 3000;
 
-app.listen(port);
+server.listen(port);
 console.log('BrandTalk API listening on port %s', port);
