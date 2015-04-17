@@ -1,28 +1,12 @@
 var sadWords = require('../words/sad.js');
 
-var parse = function(tweets, isSad){
-
-  var parsedTweets = [];
+var parse = function(tweets){
 
   for(var i = 0; i < tweets.length; i++){
-
-    var containsSadWord = false;
-
-    for(var j = 0; j < sadWords.length; j++){
-
-      containsSadWord = tweets[i].text.toLowerCase().split(' ').indexOf(sadWords[j]) >= 0;
-
-      if(containsSadWord){
-        break;
-      }
-    }
-
-    if((containsSadWord && isSad) || (!containsSadWord && !isSad)){
-      parsedTweets.push(tweets[i]);
-    }
+    tweets[i].isSad = isSad(tweets[i]);
   }
 
-  return parsedTweets;
+  return tweets;
 
 };
 
@@ -39,4 +23,3 @@ var isSad = function(tweet){
 };
 
 module.exports.parse = parse;
-module.exports.isSad = isSad;
