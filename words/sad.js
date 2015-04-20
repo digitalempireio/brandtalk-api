@@ -8,5 +8,5 @@ module.exports = [
   'racism', 'brat', 'destroying', 'destroyed', 'illegal', 'warns', 'warning',
   'cut', 'shame', 'shameful', 'traitor', 'shame', 'won\'t', 'doubt', 'doubts',
   'incite', 'inciting', 'bias', 'avoid', 'avoiding', 'avoided', 'doesn\'t',
-  'revenge'
+  'revenge', 'dictator', 'low', 'stopped'
 ];

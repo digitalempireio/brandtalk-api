@@ -1,24 +1,28 @@
 var sadWords = require('../words/sad.js');
 
-var parse = function(tweets){
+var parse = function(tweets, isSad){
+
+  var parsedTweets = [];
 
   for(var i = 0; i < tweets.length; i++){
-    tweets[i].isSad = isSad(tweets[i]);
-  }
 
-  return tweets;
+    var containsSadWord = false;
 
-};
+    for(var j = 0; j < sadWords.length; j++){
 
-var isSad = function(tweet){
+      containsSadWord = tweets[i].text.toLowerCase().split(' ').indexOf(sadWords[j]) >= 0;
 
-  for(var i = 0; i < sadWords.length; i++){
-    if(tweet.text.toLowerCase().split(' ').indexOf(sadWords[i]) >= 0) {
-      return true;
+      if(containsSadWord){
+        break;
+      }
+    }
+
+    if((containsSadWord && isSad) || (!containsSadWord && !isSad)){
+      parsedTweets.push(tweets[i]);
     }
   }
 
-  return false;
+  return parsedTweets;
 
 };
 
